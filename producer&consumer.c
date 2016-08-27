@@ -19,9 +19,11 @@ int main()
 	{
 		for (i = 0; i <= M; i++)
 		{
-			FILE *fout = fopen("buf", "ab");
+			FILE *fout;
+			
 			sem_wait(producer);
 			sem_wait(mutex);
+			fout = fopen("buf", "ab");
 			fwrite(&i, sizeof(int), 1, fout);
 			fflush(fout);
 			fclose(fout);
@@ -39,11 +41,12 @@ int main()
 			int arr[10];
 			int count;
 
-			FILE *fin = fopen("buf", "rb");
+			FILE *fin;
 			if (fin == NULL)
 				continue;
 			sem_wait(consumer);
 			sem_wait(mutex);
+			fin = fopen("buf", "rb");
 			count = fread(arr, sizeof(int), 10, fin);
 			if (!count)
 			{
