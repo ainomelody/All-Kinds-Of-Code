@@ -12,6 +12,7 @@ int main()
 	sem_t *mutex = sem_open("mutex", O_CREAT, 0664, 1);
 	int isFather = 1;
 	int i, num;
+	
 	for (i = 0; i < 3; i++)
 		isFather = isFather && fork();
 	
@@ -40,10 +41,8 @@ int main()
 		{
 			int arr[10];
 			int count;
-
 			FILE *fin;
-			if (fin == NULL)
-				continue;
+			
 			sem_wait(consumer);
 			sem_wait(mutex);
 			fin = fopen("buf", "rb");
